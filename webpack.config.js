@@ -9,7 +9,7 @@ const jsCompiler = {
     mode: "development",
     entry: {
         app: "./src/js/index.js",
-        sprite: "./src/js/sprite.js"
+        sprite: "./src/js/__sprite.js"
     },
     output: {
         filename: "[name].js",
@@ -35,6 +35,7 @@ const jsCompiler = {
     },
     devtool: "source-map",
     plugins: [
+        new IgnoreEmitPlugin(['sprite.js', 'sprite.js.map']), // CleanWebpackPlugin will generates undesired .js files
         new CleanWebpackPlugin(),
         new SpriteLoaderPlugin({
             plainSprite: true
