@@ -7,11 +7,19 @@ const jsCompiler = {
     mode: "development",
     entry: {
         app: "./src/js/index.js",
-        profile: "./src/js/profile.js"
+        sprite: "./src/js/sprite.js"
     },
     output: {
         filename: "[name].js",
         path: path.resolve(__dirname, "dist/js/")
+    },
+    module: {
+        rules: [
+            {
+                test: /\.svg$/,
+                use: ["svg-sprite-loader", "svgo-loader"]
+            }
+        ]
     },
     devtool: "source-map",
     plugins: [new CleanWebpackPlugin()]
@@ -67,6 +75,4 @@ const cssCompiler = {
     ]
 };
 
-module.exports = [
-    jsCompiler, cssCompiler
-];
+module.exports = [jsCompiler, cssCompiler];
