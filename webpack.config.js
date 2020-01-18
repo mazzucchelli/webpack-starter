@@ -1,6 +1,7 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const IgnoreEmitPlugin = require("ignore-emit-webpack-plugin");
 
 module.exports = [
     {
@@ -14,14 +15,15 @@ module.exports = [
             path: path.resolve(__dirname, "dist/js/")
         },
         devtool: "source-map",
-        plugins: [
-            new CleanWebpackPlugin()
-        ]
+        plugins: [new CleanWebpackPlugin()]
     },
     {
         mode: "development",
         entry: {
             style: "./src/style.scss"
+        },
+        output: {
+            path: path.resolve(__dirname, "dist/css/")
         },
         devtool: "source-map",
         module: {
@@ -56,10 +58,11 @@ module.exports = [
             ]
         },
         plugins: [
-            // new CleanWebpackPlugin(),
+            new IgnoreEmitPlugin([/\.js$/, /\.js.map$/]), // CleanWebpackPlugin will generates undesired .js files
+            new CleanWebpackPlugin(),
             new MiniCssExtractPlugin({
-                filename: "css/[name].css"
-            }),
+                filename: "[name].css"
+            })
         ]
     }
 ];
