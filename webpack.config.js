@@ -1,6 +1,6 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const RemovePlugin = require("remove-files-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = [
     {
@@ -13,7 +13,10 @@ module.exports = [
             filename: "[name].js",
             path: path.resolve(__dirname, "dist/js/")
         },
-        devtool: "source-map"
+        devtool: "source-map",
+        plugins: [
+            new CleanWebpackPlugin()
+        ]
     },
     {
         mode: "development",
@@ -39,7 +42,6 @@ module.exports = [
                         {
                             loader: "postcss-loader",
                             options: {
-                                plugins: () => [require("autoprefixer")],
                                 sourceMap: true
                             }
                         },
@@ -54,17 +56,10 @@ module.exports = [
             ]
         },
         plugins: [
+            // new CleanWebpackPlugin(),
             new MiniCssExtractPlugin({
                 filename: "css/[name].css"
             }),
-            new RemovePlugin({
-                before: {
-                    // parameters for "before compilation" stage.
-                },
-                after: {
-                    // parameters for "after compilation" stage.
-                }
-            })
         ]
     }
 ];
