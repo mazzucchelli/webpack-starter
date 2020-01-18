@@ -60,19 +60,15 @@ const cssCompiler = {
         ]
     },
     plugins: [
-        new IgnoreEmitPlugin([/\.js$/, /\.js.map$/]), // CleanWebpackPlugin will generates undesired .js files
+        new IgnoreEmitPlugin([/\.js$/, /\.js.map$/]), // prevent undesired .js files
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: "[name].css"
         }),
         new CopyPlugin([
             {
-                from: path.resolve(
-                    `./src/fonts`
-                ),
-                to: path.resolve(
-                    `./dist/assets/fonts/`
-                )
+                from: path.resolve(`./src/fonts`),
+                to: path.resolve(`./dist/css/fonts`)
             }
         ])
     ]
@@ -119,8 +115,7 @@ const assetsCompiler = {
         ]
     },
     plugins: [
-        new IgnoreEmitPlugin(["__assets.js", "__assets.js.map"]), // CleanWebpackPlugin will generates undesired .js files
-        new CleanWebpackPlugin(),
+        new IgnoreEmitPlugin(["__assets.js", "__assets.js.map"]), // prevent undesired .js files
         new SpriteLoaderPlugin({
             plainSprite: true
         })

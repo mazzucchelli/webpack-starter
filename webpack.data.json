@@ -1,0 +1,26 @@
+{
+    "js": {
+        "sourcemap": true,
+        "minify": false,
+        "output": "dist/js",
+        "input": {
+            "app": "./src/js/index.js"
+        }
+    },
+    "css": {
+        "sourcemap": true,
+        "minify": false,
+        "css_output": "dist/css",
+        "font_input": "./src/fonts",
+        "font_output": "./dist/css/fonts/",
+        "css_input": {
+            "global": "./src/scss/global.scss",
+            "home_page": "./src/scss/home_page.scss"
+        }
+    },
+    "assets": {
+        "output": "dist/assets/",
+        "sprite_subfolder": "icons/",
+        "images_subfolder": "images/"
+    }
+}
