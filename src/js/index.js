@@ -1,3 +1,5 @@
+import logger from './components/Logger'
+
 function draw () {
     const el = document.createElement('div');
     el.innerHTML = 'Mario say welcome!';
@@ -5,3 +7,4 @@ function draw () {
 }
 
 document.body.appendChild(draw())
+logger.log()

@@ -1,0 +1,11 @@
+body {
+    &:after {
+        content: '';
+        width: 10px;
+        height: 10px;
+        background: black;
+        position: fixed;
+        top: 10px;
+        right: 10px;
+    }
+}
