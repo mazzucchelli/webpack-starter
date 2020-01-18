@@ -4,6 +4,8 @@ const IgnoreEmitPlugin = require("ignore-emit-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const SpriteLoaderPlugin = require("svg-sprite-loader/plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const { StatsWriterPlugin } = require("webpack-stats-plugin");
+const StylelintPlugin = require("stylelint-webpack-plugin");
 
 const jsCompiler = {
     mode: "development",
@@ -15,7 +17,40 @@ const jsCompiler = {
         path: path.resolve(__dirname, "dist/js/")
     },
     devtool: "source-map",
-    plugins: [new CleanWebpackPlugin()]
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: ["@babel/preset-env"]
+                    }
+                }
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: "eslint-loader",
+                options: {
+                    outputReport: {
+                        filePath: "jslint_report.json",
+                        formatter: "json"
+                    }
+                }
+            }
+        ]
+    },
+    plugins: [
+        new CleanWebpackPlugin(),
+        new StatsWriterPlugin({
+            filename: "stats.json",
+            stats: {
+                all: true
+            }
+        })
+    ]
 };
 
 const cssCompiler = {
@@ -70,7 +105,19 @@ const cssCompiler = {
                 from: path.resolve(`./src/fonts`),
                 to: path.resolve(`./dist/css/fonts`)
             }
-        ])
+        ]),
+        new StatsWriterPlugin({
+            filename: "stats.json",
+            stats: {
+                all: false,
+                assets: true
+            }
+        }),
+        new StylelintPlugin({
+            formatter: function formatter(results, returnValue) {
+                console.log(results, returnValue);
+            }
+        })
     ]
 };
 
@@ -118,6 +165,12 @@ const assetsCompiler = {
         new IgnoreEmitPlugin(["__assets.js", "__assets.js.map"]), // prevent undesired .js files
         new SpriteLoaderPlugin({
             plainSprite: true
+        }),
+        new StatsWriterPlugin({
+            filename: "stats.json",
+            stats: {
+                all: true
+            }
         })
     ]
 };
