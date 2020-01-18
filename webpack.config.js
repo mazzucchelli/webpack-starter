@@ -3,56 +3,19 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const IgnoreEmitPlugin = require("ignore-emit-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const SpriteLoaderPlugin = require("svg-sprite-loader/plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 const jsCompiler = {
     mode: "development",
     entry: {
-        __assets: "./webpack.assets.js",
         app: "./src/js/index.js"
     },
     output: {
         filename: "[name].js",
         path: path.resolve(__dirname, "dist/js/")
     },
-    module: {
-        rules: [
-            {
-                test: /\.svg$/,
-                use: [
-                    {
-                        loader: "svg-sprite-loader",
-                        options: {
-                            extract: true,
-                            spriteFilename: "../assets/sprite.svg",
-                            runtimeCompat: true
-                        }
-                    },
-                    { loader: "svgo-loader" }
-                ]
-            },
-            {
-                test: /\.(png|jpg|gif)$/i,
-                use: [
-                    {
-                        loader: "url-loader",
-                        options: {
-                            name: "../assets/[name].[ext]",
-                            limit: 50000,
-                            quality: 85
-                        }
-                    }
-                ]
-            }
-        ]
-    },
     devtool: "source-map",
-    plugins: [
-        new IgnoreEmitPlugin(["__assets.js", "__assets.js.map"]), // CleanWebpackPlugin will generates undesired .js files
-        new CleanWebpackPlugin(),
-        new SpriteLoaderPlugin({
-            plainSprite: true
-        })
-    ]
+    plugins: [new CleanWebpackPlugin()]
 };
 
 const cssCompiler = {
@@ -101,26 +64,52 @@ const cssCompiler = {
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: "[name].css"
-        })
+        }),
+        new CopyPlugin([
+            {
+                from: path.resolve(
+                    `./src/fonts`
+                ),
+                to: path.resolve(
+                    `./dist/assets/fonts/`
+                )
+            }
+        ])
     ]
 };
 
 const assetsCompiler = {
     mode: "development",
-    entry: "./src/images",
+    entry: {
+        __assets: "./webpack.assets.js"
+    },
     output: {
-        filename: "[name].[ext]",
+        filename: "[name].js",
         path: path.resolve(__dirname, "dist/assets/")
     },
     module: {
         rules: [
+            {
+                test: /\.svg$/,
+                use: [
+                    {
+                        loader: "svg-sprite-loader",
+                        options: {
+                            extract: true,
+                            spriteFilename: "icons/sprite.svg",
+                            runtimeCompat: true
+                        }
+                    },
+                    { loader: "svgo-loader" }
+                ]
+            },
             {
                 test: /\.(png|jpg|gif)$/i,
                 use: [
                     {
                         loader: "url-loader",
                         options: {
-                            // fallback: require.resolve("responsive-loader"),
+                            name: "images/[name].[ext]",
                             limit: 50000,
                             quality: 85
                         }
@@ -128,7 +117,14 @@ const assetsCompiler = {
                 ]
             }
         ]
-    }
+    },
+    plugins: [
+        new IgnoreEmitPlugin(["__assets.js", "__assets.js.map"]), // CleanWebpackPlugin will generates undesired .js files
+        new CleanWebpackPlugin(),
+        new SpriteLoaderPlugin({
+            plainSprite: true
+        })
+    ]
 };
 
-module.exports = [jsCompiler, cssCompiler];
+module.exports = [jsCompiler, cssCompiler, assetsCompiler];
