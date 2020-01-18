@@ -1,7 +1,9 @@
 const path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const IgnoreEmitPlugin = require("ignore-emit-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const SpriteLoaderPlugin = require("svg-sprite-loader/plugin");
+// const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin');
 
 const jsCompiler = {
     mode: "development",
@@ -17,12 +19,27 @@ const jsCompiler = {
         rules: [
             {
                 test: /\.svg$/,
-                use: ["svg-sprite-loader", "svgo-loader"]
+                use: [
+                    {
+                        loader: "svg-sprite-loader",
+                        options: {
+                            extract: true,
+                            spriteFilename: "../assets/sprite.svg",
+                            runtimeCompat: true
+                        }
+                    },
+                    { loader: "svgo-loader" }
+                ]
             }
         ]
     },
     devtool: "source-map",
-    plugins: [new CleanWebpackPlugin()]
+    plugins: [
+        new CleanWebpackPlugin(),
+        new SpriteLoaderPlugin({
+            plainSprite: true
+        })
+    ]
 };
 
 const cssCompiler = {
@@ -74,5 +91,14 @@ const cssCompiler = {
         })
     ]
 };
+
+// const svgCompiler = {
+//     mode: "development",
+//     entry: path.resolve(__dirname, "src"),
+//     output: {
+//         path: path.resolve(__dirname, "dist/assets/")
+//     },
+//     plugins: [new SVGSpritemapPlugin('src/svg/*.svg')]
+// };
 
 module.exports = [jsCompiler, cssCompiler];
