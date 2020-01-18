@@ -1,10 +1,10 @@
-import logger from './components/Logger'
+import logger from "./components/Logger";
 
-function draw () {
-    const el = document.createElement('div');
-    el.innerHTML = 'Mario say welcome!';
+function draw() {
+    const el = document.createElement("div");
+    el.innerHTML = "Mario say welcome!";
     return el;
 }
 
-document.body.appendChild(draw())
-logger.log()
+document.body.appendChild(draw());
+logger.log();

@@ -3,13 +3,12 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const IgnoreEmitPlugin = require("ignore-emit-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const SpriteLoaderPlugin = require("svg-sprite-loader/plugin");
-// const SVGSpritemapPlugin = require('svg-spritemap-webpack-plugin');
 
 const jsCompiler = {
     mode: "development",
     entry: {
-        app: "./src/js/index.js",
-        sprite: "./src/js/__sprite.js"
+        __assets: "./webpack.assets.js",
+        app: "./src/js/index.js"
     },
     output: {
         filename: "[name].js",
@@ -30,12 +29,25 @@ const jsCompiler = {
                     },
                     { loader: "svgo-loader" }
                 ]
+            },
+            {
+                test: /\.(png|jpg|gif)$/i,
+                use: [
+                    {
+                        loader: "url-loader",
+                        options: {
+                            name: "../assets/[name].[ext]",
+                            limit: 50000,
+                            quality: 85
+                        }
+                    }
+                ]
             }
         ]
     },
     devtool: "source-map",
     plugins: [
-        new IgnoreEmitPlugin(['sprite.js', 'sprite.js.map']), // CleanWebpackPlugin will generates undesired .js files
+        new IgnoreEmitPlugin(["__assets.js", "__assets.js.map"]), // CleanWebpackPlugin will generates undesired .js files
         new CleanWebpackPlugin(),
         new SpriteLoaderPlugin({
             plainSprite: true
@@ -93,13 +105,30 @@ const cssCompiler = {
     ]
 };
 
-// const svgCompiler = {
-//     mode: "development",
-//     entry: path.resolve(__dirname, "src"),
-//     output: {
-//         path: path.resolve(__dirname, "dist/assets/")
-//     },
-//     plugins: [new SVGSpritemapPlugin('src/svg/*.svg')]
-// };
+const assetsCompiler = {
+    mode: "development",
+    entry: "./src/images",
+    output: {
+        filename: "[name].[ext]",
+        path: path.resolve(__dirname, "dist/assets/")
+    },
+    module: {
+        rules: [
+            {
+                test: /\.(png|jpg|gif)$/i,
+                use: [
+                    {
+                        loader: "url-loader",
+                        options: {
+                            // fallback: require.resolve("responsive-loader"),
+                            limit: 50000,
+                            quality: 85
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+};
 
 module.exports = [jsCompiler, cssCompiler];

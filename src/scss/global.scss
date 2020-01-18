@@ -1,7 +1,25 @@
-@import './config/vars';
+@font-face {
+    font-family: "FormaDJRDeck";
+    src: url("../fonts/FormaDJRDeck-Regular.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "FormaDJRDeck";
+    src: url("../fonts/FormaDJRDeck-Bold.woff") format("woff");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@import "./config/vars";
 
 body {
-    transform: all .2s ease;
+    transform: all 0.2s ease;
     background: $papayawhip;
     color: $tomato;
+}
+
+span {
+    font-family: "FormaDJRDeck";
 }
