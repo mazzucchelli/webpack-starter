@@ -9,3 +9,54 @@ body {
         right: 10px;
     }
 }
+:root {
+    --mainColor: red;
+}
+
+@custom-media --small-viewport (max-width: 30em);
+/* check out media queries ranges for a better syntax !*/
+
+@media (--small-viewport) {
+    a {
+        color: var(--mainColor);
+    }
+}
+
+@custom-selector :--button button, .button;
+@custom-selector :--enter :hover, :focus;
+
+:--button {
+    color: var(--mainColor);
+}
+
+:--button:--enter {
+    color: var(--mainColor);
+}
+
+.foo {
+    background-image: image-set(
+        url(img/test.png) 1x,
+        url(img/test-2x.png) 2x,
+        url(my-img-print.png) 600dpi
+    );
+}
+
+.foo {
+    width: 240px;
+}
+
+@media screen and (min-width: 768px) {
+    .foo {
+        width: 576px;
+    }
+}
+
+.bar {
+    width: 160px;
+}
+
+@media screen and (min-width: 768px) {
+    .bar {
+        width: 384px;
+    }
+}

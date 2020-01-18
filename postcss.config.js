@@ -1,5 +1,11 @@
 module.exports = {
     plugins: {
-        autoprefixer: { grid: true }
+        "postcss-cssnext": {
+            browsers: ["last 2 versions", "> 5%"]
+        },
+        "css-mqpacker": {},
+        cssnano: {
+            preset: "default"
+        }
     }
-}
+};

@@ -114,9 +114,9 @@ const cssCompiler = {
             }
         }),
         new StylelintPlugin({
-            formatter: function formatter(results, returnValue) {
-                console.log(results, returnValue);
-            }
+            // formatter: function formatter(results, returnValue) {
+            //     console.log(results, returnValue);
+            // }
         })
     ]
 };
