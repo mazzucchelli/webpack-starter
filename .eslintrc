@@ -1,21 +1,28 @@
 {
-    "extends": "standard",
+    "parser": "@typescript-eslint/parser",
+    "extends": ["plugin:@typescript-eslint/recommended", "prettier/@typescript-eslint", "plugin:prettier/recommended"],
     "env": {
         "browser": true,
         "jquery": true,
         "node": true,
         "es6": true
     },
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": ["prettier"],
     "rules": {
+        "prettier/prettier": ["error"],
         "indent": [1, 4],
         "no-trailing-spaces": 1,
         "operator-linebreak": 0,
         "no-multi-spaces": 1,
         "no-multiple-empty-lines": 1,
         "padded-blocks": 0,
-        "quotes": 1,
+        // "quotes": 1,
         "semi": [2, "always"],
-        "space-before-function-paren": 1,
+        // "space-before-function-paren": 1,
         "space-infix-ops": 1,
         "spaced-comment": [1, "always"]
     }
