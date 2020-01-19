@@ -22,5 +22,10 @@
         "output": "dist/assets/",
         "sprite_subfolder": "icons/",
         "images_subfolder": "images/"
+    },
+    "styleguide": {
+        "template": "./styleguide.hbs",
+        "src": ["./src/uikit/card", "./src/uikit/form"],
+        "dest": "./styleguide"
     }
 }

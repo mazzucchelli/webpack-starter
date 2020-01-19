@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Style Guide</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/uikit.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/styles/ocean.min.css">
+
+    <style>
+        .ss-code-live .cell {
+            resize: both;
+            overflow: auto;
+        }
+
+        .ss-code-live .cell span {
+            padding: 0 5px;
+        }
+
+        p code {
+            color: #bf616a;
+            display: inline-block;
+            margin-right: 8px;
+            position: relative;
+        }
+
+        p code:before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: calc(100% + 6px);
+            height: calc(100% + 2px);
+            background: #e6e6e6;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+        }
+
+        .ss-code pre {
+            position: relative;
+        }
+
+        .ss-code code {
+            display: block;
+            overflow-x: auto;
+            background: #2b303b;
+            color: #c0c5ce;
+            padding: 15px 20px;
+            font-size: 14px;
+            border: 10px solid #ebcb8b;
+        }
+
+        .ss-code .cpbtn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+
+        .ss-code .cpbtn:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div><a href="card.html">card</a></div>
+    <div><a href="form.html">form</a></div>
+    <div class="grid-container">
+        <div class="grid">
+            <div class="cell lg:10 md:9">
+                <div class="tabs-content">
+                    <section class="content active" id="form">
+                        <h2 id="form">Form</h2>
+<div class="ss-code"><pre><code class="html"><span class="hljs-comment">&lt;!-- &lt;form data-validate&gt;
+    &lt;div class="grid-x grid-margin-x"&gt;
+        &lt;div class="cell medium-4"&gt;
+            &lt;div class="field"&gt;
+                &lt;label for="input-text-1"&gt;Input Label&lt;/label&gt;
+                &lt;input name="input-text-1" id="input-text-1" type="text" placeholder="placeholder" required&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="cell medium-4"&gt;
+            &lt;div class="field"&gt;
+                &lt;label for="input-text-2"&gt;Input Label&lt;/label&gt;
+                &lt;input name="input-text-2" id="input-text-2" type="text" required&gt;
+                &lt;span class="help-text"&gt;This is the help text&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="cell medium-4"&gt;
+            &lt;div class="field"&gt;
+                &lt;label for="input-text-3"&gt;Input Label&lt;/label&gt;
+                &lt;input name="input-text-3" id="input-text-3" type="text" disabled&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="cell medium-4"&gt;
+            &lt;div class="field"&gt;
+                &lt;label for="input-text-4"&gt;Input Label&lt;/label&gt;
+                &lt;input name="input-text-4" id="input-text-4" type="text" placeholder="placeholder" required&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="cell medium-4"&gt;
+            &lt;div class="field"&gt;
+                &lt;label for="input-select-1"&gt;Select Box&lt;/label&gt;
+                &lt;select name="input-select-1" id="input-select-1" required&gt;
+                    &lt;option value=""&gt;Choose..&lt;/option&gt;
+                    &lt;option value="husker"&gt;Husker&lt;/option&gt;
+                    &lt;option value="starbuck"&gt;Starbuck&lt;/option&gt;
+                    &lt;option value="hotdog"&gt;Hot Dog&lt;/option&gt;
+                    &lt;option value="apollo"&gt;Apollo&lt;/option&gt;
+                &lt;/select&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="cell medium-4"&gt;
+            &lt;div class="field"&gt;
+                &lt;label for="input-select-2"&gt;Select Box&lt;/label&gt;
+                &lt;select name="input-select-2" id="input-select-2" disabled&gt;
+                    &lt;option value="husker"&gt;Husker&lt;/option&gt;
+                    &lt;option selected value="starbuck"&gt;Starbuck&lt;/option&gt;
+                    &lt;option value="hotdog"&gt;Hot Dog&lt;/option&gt;
+                    &lt;option value="apollo"&gt;Apollo&lt;/option&gt;
+                &lt;/select&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="cell medium-6"&gt;
+            &lt;div class="field field--boolean"&gt;
+                &lt;input type="checkbox" required id="input-id-1" name="input-name-1" value="1"&gt;
+                &lt;span class="checkbox-input"&gt;&lt;/span&gt;
+                &lt;label for="input-id-1" class=""&gt;Input Label&lt;/label&gt;
+            &lt;/div&gt;
+            &lt;div class="field field--boolean"&gt;
+                &lt;input type="checkbox" required id="input-id-2" name="input-name-2" value="2"&gt;
+                &lt;span class="checkbox-input"&gt;&lt;/span&gt;
+                &lt;label for="input-id-2" class=""&gt;Input Label&lt;/label&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="cell medium-6"&gt;
+            &lt;div class="field field--boolean"&gt;
+                &lt;input type="radio" required id="input-id-3" name="input-name-3" value="3"&gt;
+                &lt;span class="radio-input"&gt;&lt;/span&gt;
+                &lt;label for="input-id-3" class=""&gt;Input Label&lt;/label&gt;
+            &lt;/div&gt;
+            &lt;div class="field field--boolean"&gt;
+                &lt;input type="radio" required id="input-id-4" name="input-name-3" value="4"&gt;
+                &lt;span class="radio-input"&gt;&lt;/span&gt;
+                &lt;label for="input-id-4" class=""&gt;Input Label&lt;/label&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="cell"&gt;
+            &lt;div class="field"&gt;
+                &lt;label for="textarea-id-1"&gt;Textarea Label&lt;/label&gt;
+                &lt;textarea name="textarea-id-1" id="textarea-id-1" placeholder="placeholder" rows="4" required&gt;&lt;/textarea&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="cell form--actions"&gt;
+            &lt;button class="button"&gt;Submit&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/form&gt; --&gt;</span>
+
+
+<span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"form1"</span> <span class="hljs-attr">method</span>=<span class="hljs-string">"POST"</span> <span class="hljs-attr">novalidate</span>=<span class="hljs-string">""</span> <span class="hljs-attr">data-validate</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"field"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"name"</span>&gt;</span>Name<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"name"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"name"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Name"</span> <span class="hljs-attr">required</span>=<span class="hljs-string">""</span> <span class="hljs-attr">minlength</span>=<span class="hljs-string">"6"</span> <span class="hljs-attr">maxlength</span>=<span class="hljs-string">"18"</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"field"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"password"</span>&gt;</span>Password<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"password"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"password"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"password"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Password"</span> <span class="hljs-attr">required</span>=<span class="hljs-string">""</span> <span class="hljs-attr">minlength</span>=<span class="hljs-string">"6"</span> <span class="hljs-attr">maxlength</span>=<span class="hljs-string">"18"</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"field"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"password_confirmation"</span>&gt;</span>Confirm Password<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"password"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"password_confirmation"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"password_confirmation"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Password again"</span> <span class="hljs-attr">required</span>=<span class="hljs-string">""</span> <span class="hljs-attr">minlength</span>=<span class="hljs-string">"6"</span> <span class="hljs-attr">maxlength</span>=<span class="hljs-string">"18"</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"field"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"email"</span>&gt;</span>E-mail<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"email"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"email"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"email"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"E-mail"</span> <span class="hljs-attr">required</span>=<span class="hljs-string">""</span> <span class="hljs-attr">maxlength</span>=<span class="hljs-string">"18"</span> <span class="hljs-attr">data-ajax</span>=<span class="hljs-string">"/api/users/email-exists/?q={value}"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">small</span>&gt;</span>Try <span class="hljs-tag">&lt;<span class="hljs-name">i</span>&gt;</span>test@test.com<span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span> for ajax validation<span class="hljs-tag">&lt;/<span class="hljs-name">small</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"field"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"select"</span>&gt;</span>Select<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"select"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"select"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"c-select form-control"</span> <span class="hljs-attr">required</span>=<span class="hljs-string">""</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">""</span> <span class="hljs-attr">selected</span>=<span class="hljs-string">""</span>&gt;</span>Select option<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"1"</span>&gt;</span>One<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"2"</span>&gt;</span>Two<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"3"</span>&gt;</span>Three<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"field"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"photo"</span>&gt;</span>Photo<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"file"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"photo"</span> <span class="hljs-attr">accept</span>=<span class="hljs-string">"image/jpeg, image/png"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"photo"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"Photo"</span> <span class="hljs-attr">required</span>=<span class="hljs-string">""</span> <span class="hljs-attr">maxfilesize</span>=<span class="hljs-string">"1"</span> <span class="hljs-attr">mindimensions</span>=<span class="hljs-string">"500x500"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">small</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>Try uploading non-images even if they have .png/.jpg extension<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>Images <span class="hljs-symbol">&amp;lt;</span> 500x500px will be invalid<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>And try uploading images larger then 1MB<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">small</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"field"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">"about"</span>&gt;</span>About<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">textarea</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"about"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"about"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"form-control"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">textarea</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"field"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"c-input c-radio"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"agree"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"radio"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"1"</span> <span class="hljs-attr">required</span>=<span class="hljs-string">""</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"c-indicator"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+                I agree with Terms of Service
+            <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"submit"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"btn btn-primary"</span> <span class="hljs-attr">value</span>=<span class="hljs-string">"Submit"</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></code><button class="cpbtn btn">Copy</button></pre></div>
+
+<div class="ss-code-live"><!-- <form data-validate>
+    <div class="grid-x grid-margin-x">
+        <div class="cell medium-4">
+            <div class="field">
+                <label for="input-text-1">Input Label</label>
+                <input name="input-text-1" id="input-text-1" type="text" placeholder="placeholder" required>
+            </div>
+        </div>
+        <div class="cell medium-4">
+            <div class="field">
+                <label for="input-text-2">Input Label</label>
+                <input name="input-text-2" id="input-text-2" type="text" required>
+                <span class="help-text">This is the help text</span>
+            </div>
+        </div>
+        <div class="cell medium-4">
+            <div class="field">
+                <label for="input-text-3">Input Label</label>
+                <input name="input-text-3" id="input-text-3" type="text" disabled>
+            </div>
+        </div>
+        <div class="cell medium-4">
+            <div class="field">
+                <label for="input-text-4">Input Label</label>
+                <input name="input-text-4" id="input-text-4" type="text" placeholder="placeholder" required>
+            </div>
+        </div>
+        <div class="cell medium-4">
+            <div class="field">
+                <label for="input-select-1">Select Box</label>
+                <select name="input-select-1" id="input-select-1" required>
+                    <option value="">Choose..</option>
+                    <option value="husker">Husker</option>
+                    <option value="starbuck">Starbuck</option>
+                    <option value="hotdog">Hot Dog</option>
+                    <option value="apollo">Apollo</option>
+                </select>
+            </div>
+        </div>
+        <div class="cell medium-4">
+            <div class="field">
+                <label for="input-select-2">Select Box</label>
+                <select name="input-select-2" id="input-select-2" disabled>
+                    <option value="husker">Husker</option>
+                    <option selected value="starbuck">Starbuck</option>
+                    <option value="hotdog">Hot Dog</option>
+                    <option value="apollo">Apollo</option>
+                </select>
+            </div>
+        </div>
+        <div class="cell medium-6">
+            <div class="field field--boolean">
+                <input type="checkbox" required id="input-id-1" name="input-name-1" value="1">
+                <span class="checkbox-input"></span>
+                <label for="input-id-1" class="">Input Label</label>
+            </div>
+            <div class="field field--boolean">
+                <input type="checkbox" required id="input-id-2" name="input-name-2" value="2">
+                <span class="checkbox-input"></span>
+                <label for="input-id-2" class="">Input Label</label>
+            </div>
+        </div>
+        <div class="cell medium-6">
+            <div class="field field--boolean">
+                <input type="radio" required id="input-id-3" name="input-name-3" value="3">
+                <span class="radio-input"></span>
+                <label for="input-id-3" class="">Input Label</label>
+            </div>
+            <div class="field field--boolean">
+                <input type="radio" required id="input-id-4" name="input-name-3" value="4">
+                <span class="radio-input"></span>
+                <label for="input-id-4" class="">Input Label</label>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="field">
+                <label for="textarea-id-1">Textarea Label</label>
+                <textarea name="textarea-id-1" id="textarea-id-1" placeholder="placeholder" rows="4" required></textarea>
+            </div>
+        </div>
+        <div class="cell form--actions">
+            <button class="button">Submit</button>
+        </div>
+    </div>
+</form> -->
+
+
+<form id="form1" method="POST" novalidate="" data-validate>
+
+        <div class="field">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" class="form-control" placeholder="Name" required="" minlength="6" maxlength="18">
+        </div>
+
+        <div class="field">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" class="form-control" placeholder="Password" required="" minlength="6" maxlength="18">
+        </div>
+
+        <div class="field">
+            <label for="password_confirmation">Confirm Password</label>
+            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="Password again" required="" minlength="6" maxlength="18">
+        </div>
+
+        <div class="field">
+            <label for="email">E-mail</label>
+            <input type="email" name="email" id="email" class="form-control" placeholder="E-mail" required="" maxlength="18" data-ajax="/api/users/email-exists/?q={value}">
+            <small>Try <i>test@test.com</i> for ajax validation</small>
+        </div>
+
+        <div class="field">
+            <label for="select">Select</label>
+            <select name="select" id="select" class="c-select form-control" required="">
+                <option value="" selected="">Select option</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label for="photo">Photo</label>
+            <input type="file" name="photo" accept="image/jpeg, image/png" id="photo" class="form-control" placeholder="Photo" required="" maxfilesize="1" mindimensions="500x500">
+            <small><ul>
+                <li>Try uploading non-images even if they have .png/.jpg extension</li>
+                <li>Images &lt; 500x500px will be invalid</li>
+                <li>And try uploading images larger then 1MB</li>
+            </ul></small>
+        </div>
+
+        <div class="field">
+            <label for="about">About</label>
+            <textarea name="about" id="about" class="form-control"></textarea>
+        </div>
+
+        <div class="field">
+            <label class="c-input c-radio">
+                <input name="agree" type="radio" value="1" required="">
+                <span class="c-indicator"></span>
+                I agree with Terms of Service
+            </label>
+        </div>
+
+        <input type="submit" class="btn btn-primary" value="Submit">
+
+    </form></div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+    <script>
+        new ClipboardJS('.cpbtn', {
+            target: function (trigger) {
+                return trigger.previousElementSibling;
+            }
+        });
+    </script>
+
+</body>
+
+</html>

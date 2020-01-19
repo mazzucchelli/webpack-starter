@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Style Guide</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/uikit.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/styles/ocean.min.css">
+
+    <style>
+        .ss-code-live .cell {
+            resize: both;
+            overflow: auto;
+        }
+
+        .ss-code-live .cell span {
+            padding: 0 5px;
+        }
+
+        p code {
+            color: #bf616a;
+            display: inline-block;
+            margin-right: 8px;
+            position: relative;
+        }
+
+        p code:before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: calc(100% + 6px);
+            height: calc(100% + 2px);
+            background: #e6e6e6;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+        }
+
+        .ss-code pre {
+            position: relative;
+        }
+
+        .ss-code code {
+            display: block;
+            overflow-x: auto;
+            background: #2b303b;
+            color: #c0c5ce;
+            padding: 15px 20px;
+            font-size: 14px;
+            border: 10px solid #ebcb8b;
+        }
+
+        .ss-code .cpbtn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+
+        .ss-code .cpbtn:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    {{#each pages}}
+    <div><a href="{{ href }}">{{ label }}</a></div>
+    {{/each}}
+    <div class="grid-container">
+        <div class="grid">
+            <div class="cell lg:10 md:9">
+                <div class="tabs-content">
+                    {{#each sections}}
+                    <section class="content {{#if @first}}active{{/if}}" id="{{ anchor }}">
+                        {{ body }}
+                    </section>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{!-- <script src="path/to/js/files"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+    <script>
+        new ClipboardJS('.cpbtn', {
+            target: function (trigger) {
+                return trigger.previousElementSibling;
+            }
+        });
+    </script>
+
+</body>
+
+</html>
