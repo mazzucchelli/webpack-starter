@@ -25,6 +25,7 @@
         "eslint-plugin-prettier": "^3.1.2",
         "eslint-plugin-react": "^7.18.0",
         "eslint-plugin-react-hooks": "^1.7.0",
+        "eslint-webpack-plugin": "^0.1.0",
         "file-loader": "^5.0.2",
         "handlebars": "^4.7.2",
         "highlight.js": "^9.17.1",
@@ -50,14 +51,19 @@
         "url-loader": "^3.0.0",
         "webpack": "^4.41.5",
         "webpack-cli": "^3.3.10",
+        "webpack-hook-plugin": "^1.0.7",
+        "webpack-monitor": "^1.0.14",
         "webpack-stats-plugin": "^0.3.1"
     },
     "scripts": {
         "build": "webpack",
         "watch": "webpack --watch",
-        "lint": "tsc --noEmit && eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+        "monitor": "webpack --monitor",
         "styleguide": "node ./styleguide.js"
     },
     "author": "",
-    "license": "ISC"
+    "license": "ISC",
+    "dependencies": {
+        "chokidar": "^3.3.1"
+    }
 }

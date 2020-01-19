@@ -1,0 +1,3 @@
+-   [ ] ts .map
+-   [ ] style lint logger
+-   [ ] js lint logger

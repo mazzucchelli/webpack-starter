@@ -8,6 +8,11 @@ const format = require('string-template');
 const hljs = require('highlight.js');
 const configs = require('./project.config.json');
 
+const dir = configs.styleguide.output;
+if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+}
+
 const renderer = new marked.Renderer();
 
 // Prevents Marked from adding an ID to headings
@@ -50,7 +55,7 @@ renderer.code = (code, language) => {
 };
 
 const pageslist = () => {
-    return configs.styleguide.src.map(el => {
+    return configs.styleguide.input.map(el => {
         const filename = el.substr(el.lastIndexOf('/') + 1);
         return {
             label: filename,
@@ -101,16 +106,16 @@ const styleguide = (input, options, cb) => {
     );
 };
 
-configs.styleguide.src.forEach(kitPath => {
+configs.styleguide.input.forEach(kitPath => {
     const uikit = path.basename(kitPath);
     const uikitPath = path.dirname(kitPath);
 
     styleguide(
         `${uikitPath}/${uikit}.md`,
         {
-            output: `${configs.styleguide.dest}/${uikit}.html`,
+            output: `${configs.styleguide.output}/${uikit}.html`,
             template: configs.styleguide.template,
         },
-        () => console.log(`File ${configs.styleguide.dest}/${uikit}.html created`),
+        () => console.log(`File ${configs.styleguide.output}/${uikit}.html created`),
     );
 });

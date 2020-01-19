@@ -1,31 +1,28 @@
 {
+    "root": "./dist",
     "js": {
-        "sourcemap": true,
-        "minify": false,
-        "output": "dist/js",
+        "output": "/js",
         "input": {
             "app": "./src/js/index.js"
         }
     },
     "css": {
-        "sourcemap": true,
-        "minify": false,
-        "css_output": "dist/css",
+        "css_output": "/css",
         "font_input": "./src/fonts",
-        "font_output": "./dist/css/fonts/",
+        "font_output": "/css/fonts/",
         "css_input": {
             "global": "./src/scss/global.scss",
             "home_page": "./src/scss/home_page.scss"
         }
     },
     "assets": {
-        "output": "dist/assets/",
-        "sprite_subfolder": "icons/",
-        "images_subfolder": "images/"
+        "output": "/assets",
+        "sprite_subfolder": "/icons",
+        "images_subfolder": "/images"
     },
     "styleguide": {
         "template": "./styleguide.hbs",
-        "src": ["./src/uikit/card", "./src/uikit/form"],
-        "dest": "./styleguide"
+        "input": ["./src/uikit/card", "./src/uikit/form"],
+        "output": "./styleguide"
     }
 }

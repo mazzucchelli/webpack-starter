@@ -1,4 +1,6 @@
 /dist/js/**
 /node_modules/**
 webpack.config.js
-webpack.assets.js
+webpack.config.test.js
+webpack.ts.config.js
+chokadir.js
