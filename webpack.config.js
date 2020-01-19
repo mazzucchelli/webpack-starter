@@ -6,6 +6,8 @@ const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const { StatsWriterPlugin } = require('webpack-stats-plugin');
 const StylelintPlugin = require('stylelint-webpack-plugin');
+var ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const chalk = require('chalk');
 
 const jsCompiler = {
     mode: 'development',
@@ -80,6 +82,10 @@ const tsCompiler = {
                 all: true,
             },
         }),
+        new ProgressBarPlugin({
+            format: 'TS build [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)',
+            clear: false,
+        }),
     ],
 };
 
@@ -148,6 +154,10 @@ const cssCompiler = {
             //     console.log(results, returnValue);
             // }
         }),
+        new ProgressBarPlugin({
+            format: 'CSS build [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)',
+            clear: false,
+        }),
     ],
 };
 
@@ -201,6 +211,10 @@ const assetsCompiler = {
             stats: {
                 all: true,
             },
+        }),
+        new ProgressBarPlugin({
+            format: 'ASSETS build [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)',
+            clear: false,
         }),
     ],
 };

@@ -3,7 +3,7 @@ body {
         content: "";
         width: 10px;
         height: 10px;
-        background: black;
+        // background: black;
         position: fixed;
         top: 10px;
         right: 10px;
@@ -11,7 +11,7 @@ body {
 }
 
 :root {
-    --mainColor: red;
+    --mainColor: rgb(228, 12, 12);
 }
 
 @custom-media --small-viewport (max-width: 30em);
@@ -36,9 +36,6 @@ body {
 
 .foo {
     background-image: image-set(url(img/test.png) 1x, url(img/test-2x.png) 2x, url(my-img-print.png) 600dpi);
-}
-
-.foo {
     width: 240px;
 }
 
