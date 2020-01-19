@@ -5,54 +5,61 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Style Guide</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/uikit.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/styles/ocean.min.css">
+    {{!-- <scriptlink rel="stylesheet" href="path/to/css/files"></script> --}}
 
     <style>
-        .ss-code-live .cell {
-            resize: both;
-            overflow: auto;
+        :root {
+            --bodyBg: #fff;
+            --bodyTextColor: #444;
+            --bodyTextSize: 16px;
+            --asideBg: #fff;
+            --asideTextColor: #444;
+            --asideTextSize: #444;
+            --codeBg: #2b303b;
+            --codeTextColor: #c0c5ce;
+            --codeTextSize: #444;
+            --codePaddingX: 15px;
+            --codePaddingY: 20px;
+            --codeBorder: 10px solid #ebcb8b;
         }
 
-        .ss-code-live .cell span {
-            padding: 0 5px;
+        html,
+        body {
+            padding: 0;
+            margin: 0;
         }
 
-        p code {
-            color: #bf616a;
-            display: inline-block;
-            margin-right: 8px;
+        .sg_main {
+            background: var(--bodyBg);
+            color: var(--bodyTextColor);
+            font-size: var(--bodyTextSize);
+        }
+
+        .sg_page-title {
+            margin: 0;
+            display: none;
+        }
+
+        .sg_section-title {
+            margin: 0;
+        }
+
+        .sg_content-code pre {
             position: relative;
         }
 
-        p code:before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: calc(100% + 6px);
-            height: calc(100% + 2px);
-            background: #e6e6e6;
-            z-index: -1;
-            transform: translate(-50%, -50%);
-        }
-
-        .ss-code pre {
-            position: relative;
-        }
-
-        .ss-code code {
+        .sg_content-code code {
             display: block;
             overflow-x: auto;
-            background: #2b303b;
-            color: #c0c5ce;
-            padding: 15px 20px;
-            font-size: 14px;
-            border: 10px solid #ebcb8b;
+            background: var(--codeBg);
+            color: var(--codeTextColor);
+            padding: var(--codePaddingY) var(--codePaddingX);
+            font-size: var(--codeTextSize);
+            border: var(--codeBorder);
         }
 
-        .ss-code .cpbtn {
+        .sg_content-code .cpbtn {
             position: absolute;
             top: 10px;
             right: 10px;
@@ -60,38 +67,103 @@
             padding: 5px 10px;
         }
 
-        .ss-code .cpbtn:hover {
-            opacity: 1;
+        .sg_content-preview {}
+
+        .sg_aside {
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow: visible;
+            transform: translateX(-100%);
+            height: 100vh;
+            background: var(--asideBg);
+            color: var(--asideTextColor);
+            font-size: var(--asideTextSize);
+            transition: transform .3s ease-out;
+        }
+
+        .sg_aside:hover {
+            transform: translateX(0);
+            transition: transform .3s ease-in;
+        }
+
+        .sg_aside::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -20px;
+            width: 20px;
+            height: 20px;
+            background: black;
         }
     </style>
 </head>
 
 <body>
-    {{#each pages}}
-    <div><a href="{{ href }}">{{ label }}</a></div>
-    {{/each}}
-    <div class="grid-container">
-        <div class="grid">
-            <div class="cell lg:10 md:9">
-                <div class="tabs-content">
-                    {{#each sections}}
-                    <section class="content {{#if @first}}active{{/if}}" id="{{ anchor }}">
-                        {{ body }}
-                    </section>
-                    {{/each}}
-                </div>
-            </div>
+
+    <main class="sg_main">
+        {{#each sections}}
+        <div class="sg_content{{#if @first}} sg_is-active{{/if}}" id="{{ anchor }}">
+            {{ body }}
         </div>
-    </div>
+        {{/each}}
+    </main>
+
+    <aside class="sg_aside">
+        <div>
+            <h4 class="sg_aside-list-title">Category</h4>
+            <ul class="sg_aside-list sg_aside-list-pages">
+                {{#each pages}}
+                <li><a href="{{ href }}">{{ label }}</a></li>
+                {{/each}}
+            </ul>
+        </div>
+    </aside>
 
     {{!-- <script src="path/to/js/files"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
     <script>
-        new ClipboardJS('.cpbtn', {
+        // init copy to clipboard button
+        new ClipboardJS('.sg_cpbtn', {
             target: function (trigger) {
                 return trigger.previousElementSibling;
             }
         });
+
+        // get title and id of page sections
+        function getSections() {
+            var sectionsMap = [];
+            var $$_sections = document.querySelectorAll('.sg_section-title');
+            $$_sections.forEach(function (el) {
+                var data = {
+                    id: el.id,
+                    label: el.innerHTML
+                }
+                sectionsMap.push(data);
+            })
+            return sectionsMap;
+        }
+
+        // append to anchors to sidebar
+        function createAnchors() {
+            var $_wrapper = document.createElement('div');
+            var $_heading = document.createElement('h4');
+            $_heading.classList.add("sg_aside-list-title");
+            $_heading.innerHTML = 'Widgets';
+            $_wrapper.append($_heading);
+
+            var linksData = getSections();
+            linksData.forEach(function (el) {
+                var $_anchor = document.createElement('a');
+                $_anchor.href = '#' + el.id;
+                $_anchor.innerHTML = el.label;
+                $_wrapper.append($_anchor);
+            })
+            var $_aside = document.querySelector('aside');
+            $_aside.prepend($_wrapper);
+        }
+
+        createAnchors()
     </script>
 
 </body>
