@@ -1,12 +1,6 @@
 {
-    "parser": "@typescript-eslint/parser",
     "extends": ["plugin:@typescript-eslint/recommended", "prettier/@typescript-eslint", "plugin:prettier/recommended"],
-    "env": {
-        "browser": true,
-        "jquery": true,
-        "node": true,
-        "es6": true
-    },
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": 2018,
         "sourceType": "module"
@@ -14,7 +8,7 @@
     "plugins": ["prettier"],
     "rules": {
         "prettier/prettier": ["error"],
-        "indent": [1, 4],
+        "indent": [1, 4, { "SwitchCase": 1 }],
         "no-trailing-spaces": 1,
         "operator-linebreak": 0,
         "no-multi-spaces": 1,
@@ -25,5 +19,11 @@
         // "space-before-function-paren": 1,
         "space-infix-ops": 1,
         "spaced-comment": [1, "always"]
+    },
+    "env": {
+        "browser": true,
+        // "jquery": true,
+        // "node": true,
+        "es6": true
     }
 }
