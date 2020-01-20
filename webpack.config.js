@@ -4,53 +4,57 @@ const IgnoreEmitPlugin = require('ignore-emit-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-// const { StatsWriterPlugin } = require('webpack-stats-plugin');
 const StylelintPlugin = require('stylelint-webpack-plugin');
-var ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const WebpackMonitor = require('webpack-monitor');
-const chalk = require('chalk');
 const ESLintPlugin = require('eslint-webpack-plugin');
-// const WebpackHookPlugin = require('webpack-hook-plugin');
+const configs = require('./project.config.json');
+
+const inputFileNames = () => {
+    const cssInputs = configs.css.inputs || {};
+    const jsInputs = configs.js.inputs || {};
+    const assetsInputs = { __assets: './webpack.assets.js' };
+    return { ...cssInputs, ...jsInputs, ...assetsInputs };
+};
+
+const undesiredFileNames = () => {
+    const arr = ['__assets.js', '__assets.js.map'];
+    const keys = Object.keys(configs.css.inputs);
+    for (const key of keys) {
+        arr.push(`${key}.js`, `${key}.js.map`);
+    }
+    return arr;
+};
 
 const plugins = [
-    new IgnoreEmitPlugin([
-        '__assets.js',
-        '__assets.js.map',
-        'global.js',
-        'global.js.map',
-        'home_page.js',
-        'home_page.js.map',
-    ]), // prevent undesired .js files
+    // prevent undesired .js files
+    new IgnoreEmitPlugin(undesiredFileNames()),
+    // clean outputs before first build
     new CleanWebpackPlugin({
         cleanStaleWebpackAssets: false, // resolve conflict with `CopyWebpackPlugin`
     }),
+    // generate sprite
     new SpriteLoaderPlugin({
         plainSprite: true,
     }),
+    // extract styles
     new MiniCssExtractPlugin({
         filename: 'css/[name].css',
     }),
+    // copy font files
     new CopyPlugin([
         {
             from: path.resolve(`./src/fonts`),
             to: path.resolve(`./dist/css/fonts`),
         },
     ]),
+    // lint styles
     new StylelintPlugin({
         formatter: 'verbose',
     }),
+    // lint js
     new ESLintPlugin({
         formatter: 'stylish',
     }),
-    new ProgressBarPlugin({
-        format: 'Build [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)',
-        clear: false,
-        width: 20,
-    }),
-    // new WebpackHookPlugin({
-    //     onBuildStart: ['echo "Webpack Start"'],
-    //     onBuildEnd: ['echo "Webpack End"'],
-    // }),
 ];
 
 if (process.argv.includes('--monitor')) {
@@ -65,14 +69,9 @@ if (process.argv.includes('--monitor')) {
     );
 }
 
-const jsCompiler = {
+module.exports = {
     mode: 'development',
-    entry: {
-        __assets: './webpack.assets.js',
-        app: './src/js/index.js',
-        global: './src/scss/global.scss',
-        home_page: './src/scss/home_page.scss',
-    },
+    entry: inputFileNames(),
     output: {
         filename: 'js/[name].js',
         path: path.resolve(__dirname, 'dist/'),
@@ -162,133 +161,3 @@ const jsCompiler = {
     },
     plugins: plugins,
 };
-
-// const cssCompiler = {
-//     mode: 'development',
-//     entry: {
-//         global: './src/scss/global.scss',
-//         home_page: './src/scss/home_page.scss',
-//     },
-//     output: {
-//         path: path.resolve(__dirname, 'dist/css/'),
-//     },
-//     devtool: 'source-map',
-//     module: {
-//         rules: [
-//             {
-//                 test: /\.scss$/,
-//                 use: [
-//                     {
-//                         loader: MiniCssExtractPlugin.loader,
-//                     },
-//                     {
-//                         loader: 'css-loader',
-//                         options: {
-//                             url: false,
-//                             sourceMap: true,
-//                         },
-//                     },
-//                     {
-//                         loader: 'postcss-loader',
-//                         options: {
-//                             sourceMap: true,
-//                         },
-//                     },
-//                     {
-//                         loader: 'sass-loader',
-//                         options: {
-//                             sourceMap: true,
-//                         },
-//                     },
-//                 ],
-//             },
-//         ],
-//     },
-//     plugins: [
-//         new IgnoreEmitPlugin([/\.js$/, /\.js.map$/]), // prevent undesired .js files
-//         new CleanWebpackPlugin(),
-//         new MiniCssExtractPlugin({
-//             filename: '[name].css',
-//         }),
-//         new CopyPlugin([
-//             {
-//                 from: path.resolve(`./src/fonts`),
-//                 to: path.resolve(`./dist/css/fonts`),
-//             },
-//         ]),
-//         new StatsWriterPlugin({
-//             filename: 'stats.json',
-//             stats: {
-//                 all: false,
-//                 assets: true,
-//             },
-//         }),
-//         new StylelintPlugin({
-//             // formatter: function formatter(results, returnValue) {
-//             //     console.log(results, returnValue);
-//             // }
-//         }),
-//         new ProgressBarPlugin({
-//             format: 'CSS build [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)',
-//             clear: false,
-//         }),
-//     ],
-// };
-
-// const assetsCompiler = {
-//     mode: 'development',
-//     entry: {},
-//     output: {
-//         filename: '[name].js',
-//         path: path.resolve(__dirname, 'dist/assets/'),
-//     },
-//     module: {
-//         rules: [
-//             {
-//                 test: /\.svg$/,
-//                 use: [
-//                     {
-//                         loader: 'svg-sprite-loader',
-//                         options: {
-//                             extract: true,
-//                             spriteFilename: 'icons/sprite.svg',
-//                             runtimeCompat: true,
-//                         },
-//                     },
-//                     { loader: 'svgo-loader' },
-//                 ],
-//             },
-//             {
-//                 test: /\.(png|jpg|gif)$/i,
-//                 use: [
-//                     {
-//                         loader: 'url-loader',
-//                         options: {
-//                             name: 'images/[name].[ext]',
-//                             limit: 50000,
-//                             quality: 85,
-//                         },
-//                     },
-//                 ],
-//             },
-//         ],
-//     },
-//     plugins: [
-//         new IgnoreEmitPlugin(['__assets.js', '__assets.js.map']), // prevent undesired .js files
-//         new SpriteLoaderPlugin({
-//             plainSprite: true,
-//         }),
-//         new StatsWriterPlugin({
-//             filename: 'stats.json',
-//             stats: {
-//                 all: true,
-//             },
-//         }),
-//         new ProgressBarPlugin({
-//             format: 'ASSETS build [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)',
-//             clear: false,
-//         }),
-//     ],
-// };
-
-module.exports = [jsCompiler];

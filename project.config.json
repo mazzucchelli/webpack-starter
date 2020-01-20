@@ -2,15 +2,15 @@
     "root": "./dist",
     "js": {
         "output": "/js",
-        "input": {
+        "inputs": {
             "app": "./src/js/index.js"
         }
     },
     "css": {
-        "css_output": "/css",
+        "output": "/css",
         "font_input": "./src/fonts",
         "font_output": "/css/fonts/",
-        "css_input": {
+        "inputs": {
             "global": "./src/scss/global.scss",
             "home_page": "./src/scss/home_page.scss"
         }
