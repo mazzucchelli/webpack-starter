@@ -1,5 +1,5 @@
 {
-    "root": "./dist",
+    "output_root": "dist/",
     "js": {
         "output": "/js",
         "inputs": {

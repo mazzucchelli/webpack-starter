@@ -1,4 +1,5 @@
 const path = require('path');
+const glob = require('glob');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const IgnoreEmitPlugin = require('ignore-emit-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -8,6 +9,10 @@ const StylelintPlugin = require('stylelint-webpack-plugin');
 const WebpackMonitor = require('webpack-monitor');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const configs = require('./project.config.json');
+// const ImageminPlugin = require('imagemin-webpack')
+const ImageminPlugin = require('imagemin-webpack-plugin').default;
+// const SVGSymbolSprite = require('svg-symbol-sprite-loader');
+// const IconfontWebpackPlugin = require('iconfont-webpack-plugin');
 
 const inputFileNames = () => {
     const cssInputs = configs.css.inputs || {};
@@ -42,11 +47,31 @@ const plugins = [
     }),
     // copy font files
     new CopyPlugin([
+        // copy fonts
         {
-            from: path.resolve(`./src/fonts`),
-            to: path.resolve(`./dist/css/fonts`),
+            from: 'src/fonts',
+            to: 'css/fonts',
+        },
+        // min images
+        {
+            from: 'src/images/',
+            to: 'assets',
         },
     ]),
+    new ImageminPlugin({
+        cacheFolder: path.resolve('node_modules/cache-imgmin/'),
+        externalImages: {
+            context: 'src', // Important! This tells the plugin where to "base" the paths at
+            sources: glob.sync('src/images/**/*'),
+            destination: 'dist/assets',
+            fileName: '[name].[ext]', // (filePath) => filePath.replace('jpg', 'webp') is also possible
+        },
+        plugins: [
+            ['gifsicle', { interlaced: true }],
+            ['jpegtran', { progressive: true }],
+            ['optipng', { optimizationLevel: 5 }],
+        ],
+    }),
     // lint styles
     new StylelintPlugin({
         formatter: 'verbose',
@@ -60,11 +85,11 @@ const plugins = [
 if (process.argv.includes('--monitor')) {
     plugins.push(
         new WebpackMonitor({
-            capture: true, // -> default 'true'
-            target: './myStatsStore.json', // default -> '../monitor/stats.json'
-            launch: true, // -> default 'false'
-            port: 3030, // default -> 8081
-            excludeSourceMaps: true, // default 'true'
+            capture: true,
+            target: './myStatsStore.json',
+            launch: true,
+            port: 3030,
+            excludeSourceMaps: true,
         }),
     );
 }
@@ -93,17 +118,6 @@ module.exports = {
                 ],
             },
             {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'eslint-loader',
-                options: {
-                    outputReport: {
-                        filePath: 'jslint_report.json',
-                        formatter: 'json',
-                    },
-                },
-            },
-            {
                 test: /\.(s*)css$/,
                 use: [
                     {
@@ -120,6 +134,15 @@ module.exports = {
                         loader: 'postcss-loader',
                         options: {
                             sourceMap: true,
+                            // plugins: loader => [
+                            //     // Add the plugin
+                            //     new IconfontWebpackPlugin({
+                            //         resolve: loader.resolve,
+                            //         fontNamePrefix: 'custom-',
+                            //         enforcedSvgHeight: 3000,
+                            //         modules: false,
+                            //     }),
+                            // ],
                         },
                     },
                     {
@@ -137,24 +160,11 @@ module.exports = {
                         loader: 'svg-sprite-loader',
                         options: {
                             extract: true,
-                            spriteFilename: 'assets/icons/sprite.svg',
+                            spriteFilename: 'assets/sprite.svg',
                             runtimeCompat: true,
                         },
                     },
                     { loader: 'svgo-loader' },
-                ],
-            },
-            {
-                test: /\.(png|jpg|gif)$/i,
-                use: [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            name: 'assets/images/[name].[ext]',
-                            limit: 50000,
-                            quality: 85,
-                        },
-                    },
                 ],
             },
         ],
