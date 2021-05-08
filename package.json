@@ -28,7 +28,7 @@
         "eslint-webpack-plugin": "^0.1.0",
         "file-loader": "^5.0.2",
         "glob": "^7.1.6",
-        "handlebars": "^4.7.2",
+        "handlebars": "^4.7.7",
         "highlight.js": "^9.17.1",
         "ignore-emit-webpack-plugin": "^2.0.2",
         "imagemin-gifsicle": "^6.0.1",
